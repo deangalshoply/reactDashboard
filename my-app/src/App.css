@@ -1,0 +1,51 @@
+html{
+  background-color: rgba(221, 221, 221, 0.671);
+
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+}
+
+.firstLine{
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.secondLine{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.thirdLine{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+#mbs{
+  border:  rgb(254,184,102) 6px solid;
+  outline: red 2px solid;
+  background-color: white;
+}
+
+#hesed{
+  border:  rgb(7,135,197) 6px solid;
+  outline: rgb(246,134,33) 4px solid;
+
+}
+
+#citysal{
+border: rgb(34, 56, 87) 6px solid;
+}
+
+
+
+

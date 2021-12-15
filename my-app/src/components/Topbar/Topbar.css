@@ -1,0 +1,10 @@
+.Topbar{
+    height: 10vh;
+    width: 100vw;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    
+}

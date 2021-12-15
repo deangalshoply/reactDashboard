@@ -1,0 +1,35 @@
+const initialState = {}
+
+const mbsOrdersReducer = (state = initialState, action) => {
+    switch(action.type){
+        case 'FETCH_MBS_ORDERS':
+           return state = action.payload
+
+
+        case 'GET_MBS_ORDERS':
+            return state
+            
+        case 'POST_MBS_ORDERS':
+        console.log(action.payload);
+         let newState = [...state,action.payload]
+         console.log(newState);
+            return newState
+
+        case 'PUT_MBS_ORDERS':
+            const orderId = action.payload.id
+            const putState = [...state]
+            let putId = putState.findIndex(item => item.id === orderId)
+            putState[putId] = action.payload
+            return putState
+
+        case 'DELETE_MBS_ORDERS':
+            const deleteState = [...state]
+            deleteState.splice(action.payload,1)
+            return deleteState
+
+        default:
+            return state;
+    }
+}
+
+export default mbsOrdersReducer
