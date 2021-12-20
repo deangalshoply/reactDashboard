@@ -50,11 +50,10 @@ app.get('/hesed-api',function(req,res) {
 var postBody = "";
 var putBody = "";
 var deleteBody = "";
-var domain = ""
 
 app.post('/post',function(req,res) {
     postBody = req.body;
-     eventEmitter.emit('onPost',JSON.stringify(postBody),(" " + domain))
+     eventEmitter.emit('onPost',JSON.stringify(postBody),(" " + req.headers.domain))
      res.status(200).send('OK')
 
 
@@ -63,7 +62,7 @@ app.post('/post',function(req,res) {
 //put eventEmiter
 app.post('/put',function(req,res) {
     putBody = req.body;
-    eventEmitter.emit('onPut',JSON.stringify(putBody),(" " + domain))
+    eventEmitter.emit('onPut',JSON.stringify(putBody),(" " + req.headers.domain))
     res.status(200).send('OK')
 
 
@@ -72,7 +71,7 @@ app.post('/put',function(req,res) {
 //delete eventEmiter
 app.post('/delete',function(req,res) {
     deleteBody = req.body;
-    eventEmitter.emit('onDelete',JSON.stringify(deleteBody),(" " + domain))
+    eventEmitter.emit('onDelete',JSON.stringify(deleteBody),(" " + req.headers.domain))
     res.status(200).send('OK')
 
 
@@ -120,18 +119,18 @@ const wss = new WebsocketServer({
 
 
 // on post send data to react
-eventEmitter.on('onPost', function(data,domain){
-    connection.send([data,domain,' post'])  
+eventEmitter.on('onPost', function( data, domain ){
+    connection.send([data, domain, ' post'])  
 })
 
 // on put send data to react
-eventEmitter.on('onPut', function(data,domain){
-    connection.send([data,domain,' put'])  
+eventEmitter.on('onPut', function( data, domain ){
+    connection.send([data, domain, ' put'])  
 })
 
 // on delete send data to react
-eventEmitter.on('onDelete', function(data,domain){
-    connection.send([data,domain,' delete'])  
+eventEmitter.on('onDelete', function( data, domain ){
+    connection.send([data, domain, ' delete'])  
 })
 
 // all wss .on
@@ -142,7 +141,6 @@ wss.on("request", request => {
 
    connection.on("message", message => {
        console.log(`Recived message ${message.utf8Data}`);
-       domain = request.origin
    })
 })
 

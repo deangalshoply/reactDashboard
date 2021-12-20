@@ -82,41 +82,33 @@ let msgData = message.data.split(", ");
 if(msgData[2] == 'post'){
   console.log(msgData);
   
-  if(message.data[1].includes("bundles")){
-    console.log(msgData[0]);
-    console.log(msgData[0].replaceAll('\\', ''));
-    dispatch(postMbsOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+  if(msgData[1] == "bundles" ){
+    dispatch(postMbsOrders(JSON.parse(msgData[0])))
   
-  } else {
-    console.log(msgData[0]);
-    console.log(msgData[0].replaceAll('\\', ''));
-    dispatch(postHesedOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+  } else if(msgData[1] == "hesed" ) {
+    dispatch(postHesedOrders(JSON.parse(msgData[0])))
     
     }
   }
 
   if(msgData[2] == 'put'){
     console.log(msgData);
-    if(message.data[1].includes("bundles")){
-      console.log(msgData[0]);
-      console.log(msgData[0].replaceAll('\\', ''));
-      dispatch(putMbsOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+    if(msgData[1] == "bundles" ){
+      dispatch(putMbsOrders(JSON.parse(msgData[0])))
     
-    } else {
-      console.log(msgData[0]);
-      console.log(msgData[0].replaceAll('\\', ''));
-      dispatch(putHesedOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+    } else if(msgData[1] == "hesed" ) {
+      dispatch(putHesedOrders(JSON.parse(msgData[0])))
       
       }
   }
   
   if(msgData[2] == 'delete'){
     console.log(msgData);
-    if(message.data[1].includes("bundles")){
-      dispatch(deleteMbsOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+    if(msgData[1] == "bundles" ){
+      dispatch(deleteMbsOrders(JSON.parse(msgData[0])))
     
-    } else {
-      dispatch(deleteHesedOrders(JSON.parse(msgData[0].replaceAll('\\', ''))))
+    } else if(msgData[1] == "hesed" ) {
+      dispatch(deleteHesedOrders(JSON.parse(msgData[0])))
       
       }
   
