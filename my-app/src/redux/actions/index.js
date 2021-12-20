@@ -85,6 +85,27 @@ export const getHesedOrders = (ordersData) => {
     }
 }
 
+export const postHesedOrders = (newOrder) => {
+    return{
+        type: 'POST_HESED_ORDERS',
+        payload: newOrder
+    }
+}
+
+export const putHesedOrders = (orderData) => {
+    return{
+        type: 'PUT_HESED_ORDERS',
+        payload: orderData
+    }
+}
+
+export const deleteHesedOrders = (ordersId) => {
+    return{
+        type: 'DELETE_HESED_ORDERS',
+        payload: ordersId
+    }
+}
+
 
 //CITYSAL
 // export const fetchCitysalOrders = (ordersData) => {

@@ -46,21 +46,51 @@ app.get('/hesed-api',function(req,res) {
 
 
 
-// post
-var body = "";
+//post eventEmiter
+var postBody = "";
+var putBody = "";
+var deleteBody = "";
+var domain = ""
 
-app.post('/hook',function(req,res) {
-     body = req.body;
-    
-     eventEmitter.emit('onPost',JSON.stringify(body))
+app.post('/post',function(req,res) {
+    postBody = req.body;
+     eventEmitter.emit('onPost',JSON.stringify(postBody),(" " + domain))
      res.status(200).send('OK')
 
 
 })
 
-app.get('/hook',function(req,res) {
+//put eventEmiter
+app.post('/put',function(req,res) {
+    putBody = req.body;
+    eventEmitter.emit('onPut',JSON.stringify(putBody),(" " + domain))
+    res.status(200).send('OK')
 
-    res.send(body);
+
+})
+
+//delete eventEmiter
+app.post('/delete',function(req,res) {
+    deleteBody = req.body;
+    eventEmitter.emit('onDelete',JSON.stringify(deleteBody),(" " + domain))
+    res.status(200).send('OK')
+
+
+})
+
+app.get('/post',function(req,res) {
+
+    res.send(postBody);
+})
+
+app.get('/put',function(req,res) {
+
+    res.send(putBody);
+})
+
+app.get('/delete',function(req,res) {
+
+    res.send(deleteBody);
 })
 
  
@@ -90,9 +120,18 @@ const wss = new WebsocketServer({
 
 
 // on post send data to react
-eventEmitter.on('onPost', function(msg){
-    console.log(msg);
-    connection.send(msg)  
+eventEmitter.on('onPost', function(data,domain){
+    connection.send([data,domain,' post'])  
+})
+
+// on put send data to react
+eventEmitter.on('onPut', function(data,domain){
+    connection.send([data,domain,' put'])  
+})
+
+// on delete send data to react
+eventEmitter.on('onDelete', function(data,domain){
+    connection.send([data,domain,' delete'])  
 })
 
 // all wss .on
@@ -103,7 +142,7 @@ wss.on("request", request => {
 
    connection.on("message", message => {
        console.log(`Recived message ${message.utf8Data}`);
-
+       domain = request.origin
    })
 })
 

@@ -4,9 +4,34 @@ const hesedOrdersReducer = (state = initialState, action) => {
     switch(action.type){
         case 'FETCH_HESED_ORDERS':
            return state = action.payload
-        
+
+
         case 'GET_HESED_ORDERS':
             return state
+            
+        case 'POST_HESED_ORDERS':
+        console.log(action.payload);
+         let newState = [...state,action.payload]
+         console.log(newState);
+            return newState
+
+        case 'PUT_HESED_ORDERS':
+            const orderId = action.payload.id
+            const putState = [...state]
+            let putId = putState.findIndex(item => item.id === orderId)
+            putState[putId] = action.payload
+            return putState
+
+        case 'DELETE_HESED_ORDERS':
+            const deleteId = action.payload.id
+            const deleteState = [...state]
+            let deleteIndex = deleteState.findIndex(item => item.id === deleteId)
+            console.log(deleteIndex);
+
+            if(deleteIndex != -1){
+                deleteState.splice(deleteIndex,1)
+            }
+            return deleteState
 
         default:
             return state;
@@ -14,3 +39,4 @@ const hesedOrdersReducer = (state = initialState, action) => {
 }
 
 export default hesedOrdersReducer
+

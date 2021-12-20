@@ -2,7 +2,7 @@ import './App.css';
 import React,{useEffect,useState} from 'react'
 
 import { CreateFilter, Topbar, Intro, AllLines, Filter } from './components/compnentsIndex'
-import { fetchMbsOrders , fetchHesedOrders , postMbsOrders, putMbsOrders, deleteMbsOrders } from './redux/actions';
+import { fetchMbsOrders , fetchHesedOrders , postMbsOrders, putMbsOrders, deleteMbsOrders, postHesedOrders, putHesedOrders, deleteHesedOrders } from './redux/actions';
 import { w3cwebsocket }  from 'websocket'
 import { Route,Routes } from 'react-router-dom'
 import { useSelector,useDispatch } from "react-redux";
@@ -76,11 +76,64 @@ await fetch("http://localhost:8000/hesed-api")
 
 // post
 client.onmessage = message => {
-console.log(message.data);
-//hesed or mbs if /w origin.
-  dispatch(postMbsOrders(JSON.parse(message.data)))
+  console.log(message);
+let msgData = message.data.split(", ");
 
+if(msgData[2] == 'post'){
+  console.log(msgData);
+  
+  if(message.data[1].includes("bundles")){
+    dispatch(postMbsOrders(JSON.parse(msgData[0])))
+  
+  } else {
+    dispatch(postHesedOrders(JSON.parse(msgData[0])))
+    
+    }
+  }
+
+  if(msgData[2] == 'put'){
+    console.log(msgData);
+    if(message.data[1].includes("bundles")){
+      dispatch(putMbsOrders(JSON.parse(msgData[0])))
+    
+    } else {
+      dispatch(putHesedOrders(JSON.parse(msgData[0])))
+      
+      }
+  }
+  
+  if(msgData[2] == 'delete'){
+    console.log(msgData);
+    if(message.data[1].includes("bundles")){
+      dispatch(deleteMbsOrders(JSON.parse(msgData[0])))
+    
+    } else {
+      dispatch(deleteHesedOrders(JSON.parse(msgData[0])))
+      
+      }
+  
+  }
 }
+
+
+
+
+
+
+
+// delete
+// client.onmessage = message => {
+//   console.log(message.data.split(", "));
+//   console.log(message);
+  
+//   if(message.data[1].includes("bundles")){
+//     dispatch(postMbsOrders(JSON.parse(message.data[0])))
+  
+//   } else {
+//     dispatch(postHesedOrders(JSON.parse(message.data[0])))
+    
+//     }
+//   }
 
 
   return (
