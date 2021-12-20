@@ -9,7 +9,7 @@ import { useSelector,useDispatch } from "react-redux";
 
 function App() {
 
-let client = new w3cwebsocket("ws://localhost:8080");
+let client = new w3cwebsocket("ws://34.245.122.208:8080");
 client.onopen = console.log("React Connected to 8080");
 client.onmessage = message => setTest(message.data)
 
@@ -41,13 +41,13 @@ client.onmessage = message => setTest(message.data)
 
   useEffect(async() => {
     
-await fetch("http://localhost:8000/mbs-api")
+await fetch("http://34.245.122.208:8000/mbs-api")
 .then(respone => respone.json())
 .then(data => {
   setMbsOrders(data)
 })
 
-await fetch("http://localhost:8000/hesed-api")
+await fetch("http://34.245.122.208:8000/hesed-api")
 .then(respone => respone.json())
 .then(data => {
   setHesedOrders(data)
