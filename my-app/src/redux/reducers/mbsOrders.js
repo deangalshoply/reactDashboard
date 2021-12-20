@@ -23,9 +23,14 @@ const mbsOrdersReducer = (state = initialState, action) => {
             return putState
 
         case 'DELETE_MBS_ORDERS':
+            const deleteId = action.payload.id
             const deleteState = [...state]
-            deleteState.splice(action.payload,1)
-            return deleteState
+            let deleteIndex = deleteState.findIndex(item => item.id === deleteId)
+            
+            if(deleteIndex != -1){
+                deleteState.splice(deleteIndex,1)
+            }           
+             return deleteState
 
         default:
             return state;
