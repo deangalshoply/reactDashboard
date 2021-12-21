@@ -10,7 +10,7 @@ import { stringToDate, currentTime, dateSlicer } from '../../../utils';
 import { useSelector,useDispatch } from "react-redux";
 import { addFilterData, removeFilterData } from '../../../redux/actions';
 
-export default function OrdersInLate({domain}) {
+export default function OrdersInLate({filter,domain}) {
   
   let [active, setActive] = useState([false,false,false]);
 
@@ -129,29 +129,39 @@ let filteredMbsOrdersByStatus = MbsOrdersData.filter(element =>
 }
   
   let addStyle = {
-    transition: 'transform 150ms ease',
-    transform: active[DomainData.domainNumber] ? 'rotate(45deg)' : '', 
-    marginRight:'7px',
-    fontSize:'xx-large',
-    cursor:'pointer'
-   }
+  transition: 'transform 150ms ease',
+  transform: active[DomainData.domainNumber] ? 'rotate(45deg)' : '', 
+  marginRight:'7px',
+  fontSize:'xx-large',
+  cursor:'pointer'
+ }
+
+let firstLine = {
+  fontSize:'50px',
+  width: '25vw' ,
+  height: '33.333vh' 
+}
+
+let filterStyles = {
+  fontSize:'50px',
+  height: '24.5vh', 
+  width: '28.68vh'
+}
   return (
-    <Card id={domain} sx={{ width: 275 , height:275, borderRadius:'50px' }}>
-      <CardContent>
+    <Card id={domain} sx={filter ? filterStyles : firstLine}>
+      <CardContent style={{height:'30%'}}>
         
-        <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h5" component="div">
+        <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
 <AddIcon  onClick={addHandle} style={addStyle}/>
         הזמנות קיימות באיחור מסירה
         </Typography>
         
-        <Typography variant="body">
-          <h1> {(DomainData.domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </h1>
+        </CardContent>
+      <Typography variant="body">
+<div class='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
           <br/>
         </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+     
     </Card>
   );
 }

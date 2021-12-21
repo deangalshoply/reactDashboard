@@ -5,12 +5,14 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
-
 import { useSelector,useDispatch } from "react-redux";
 import { addFilterData, removeFilterData } from '../../../redux/actions';
+import { dateSlicer } from '../../../utils';
 
-export default function Unfound({filter,domain}) {
- 
+
+export default function Today({filter,domain}) {
+
+
   let [active, setActive] = useState([false,false,false]);
 
   const DomainData = useSelector((state) => state.Domain);
@@ -21,49 +23,53 @@ export default function Unfound({filter,domain}) {
 
   const dispatch = useDispatch();
 
-  let filteredMbsOrders = MbsOrdersData.filter(element => element.status == 'couldnt-find-you');
-  let filteredHesedOrders = HesedOrdersData.filter(element => element.status == 'couldnt-find-you');
- 
-  if (domain == undefined) {
-    domain = DomainData.domain
-  }
-  
-  //Load Data
+  let today = new Date();
+
+let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(today));
+let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(today));
+
+if (domain == undefined) {
+  domain = DomainData.domain
+}
+
+
+//Load Data
 useEffect(() => {
   FiltersData.forEach(element => {
     if(element.name == SelectedData){
-      let result = element.data.filter( active => active == "Unfound0" || active == "Unfound1" || active == "Unfound2" )
+      let result = element.data.filter( active => active == "Today0" || active == "Today1" || active == "Today2" )
       result.forEach( filter => {
-        if(filter == "Unfound0"){
+        if(filter == "Today0"){
           active[0] = true
           setActive([...active])
         }
 
-        if(filter == "Unfound1"){
+        if(filter == "Today1"){
           active[1] = true
           setActive([...active])
         }
-
-        if(filter == "Unfound2"){
+        
+        if(filter == "Today2"){
           active[2] = true
           setActive([...active])
         }
-        
       })
     }
 
 })
 }, [SelectedData])
 
-  const addHandle = (e) =>{
+
+//add button handle
+const addHandle = (e) =>{
   if(DomainData.domain === "mbs"){
     active[DomainData.domainNumber] = !active[DomainData.domainNumber]
     setActive([...active])
     if(active[DomainData.domainNumber] == true){
-      dispatch(addFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(addFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
     }
     if(active[DomainData.domainNumber] == false){
-      dispatch(removeFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(removeFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
 
     }
 
@@ -72,10 +78,10 @@ useEffect(() => {
     active[DomainData.domainNumber] = !active[DomainData.domainNumber]
     setActive([...active])
     if(active[DomainData.domainNumber] == true){
-      dispatch(addFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(addFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
     }
     if(active[DomainData.domainNumber] == false){
-      dispatch(removeFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(removeFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
 
     }
 
@@ -84,16 +90,16 @@ useEffect(() => {
     active[DomainData.domainNumber] = !active[DomainData.domainNumber]
     setActive([...active])
     if(active[DomainData.domainNumber] == true){
-      dispatch(addFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(addFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
     }
     if(active[DomainData.domainNumber] == false){
-      dispatch(removeFilterData({name: SelectedData, data: "Unfound" + DomainData.domainNumber}))
+      dispatch(removeFilterData({name: SelectedData, data: "Today" + DomainData.domainNumber}))
 
     }
   }
 }
-  
-  let addStyle = {
+
+let addStyle = {
   transition: 'transform 150ms ease',
   transform: active[DomainData.domainNumber] ? 'rotate(45deg)' : '', 
   marginRight:'7px',
@@ -112,14 +118,13 @@ let filterStyles = {
   height: '24.5vh', 
   width: '28.68vh'
 }
+
   return (
     <Card id={domain} sx={filter ? filterStyles : firstLine}>
       <CardContent style={{height:'30%'}}>
         
         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
-<AddIcon  onClick={addHandle} style={addStyle}/>
-         הזמנות שלא נמצאה להן הכתובת
-        </Typography>
+        <AddIcon onClick={addHandle} id="today" style={addStyle}/>גרף        </Typography >
         
         </CardContent>
       <Typography variant="body">

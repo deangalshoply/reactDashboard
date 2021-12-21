@@ -8,11 +8,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector,useDispatch } from "react-redux";
 import { addFilterData, removeFilterData } from '../../../redux/actions';
 import { dateSlicer } from '../../../utils';
+import { width } from '@mui/system';
 
 
-export default function Today({domain}) {
+export default function Today({filter,domain}) {
 
-
+  
   let [active, setActive] = useState([false,false,false]);
 
   const DomainData = useSelector((state) => state.Domain);
@@ -107,22 +108,32 @@ let addStyle = {
   cursor:'pointer'
  }
 
+let firstLine = {
+  fontSize:'50px',
+  width: '25vw' ,
+  height: '33.333vh' 
+}
+
+let filterStyles = {
+  fontSize:'50px',
+  height: '24.5vh', 
+  width: '28.68vh'
+}
+
   return (
-    <Card id={domain} sx={{ width: 275 , height:275, borderRadius:'50px' }}>
-      <CardContent>
+    <Card id={domain} sx={filter ? filterStyles : firstLine}>
+      <CardContent style={{height:'30%'}}>
         
-        <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h5" component="div">
+        <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
         <AddIcon onClick={addHandle} id="today" style={addStyle}/>הזמנות להיום
         </Typography >
         
-        <Typography variant="body">
-<h1> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </h1>
+        </CardContent>
+      <Typography variant="body">
+<div class='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
           <br/>
         </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+     
     </Card>
   );
 }

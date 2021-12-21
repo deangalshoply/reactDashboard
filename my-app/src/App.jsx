@@ -1,6 +1,5 @@
 import './App.css';
 import React,{useEffect,useState} from 'react'
-
 import { CreateFilter, Topbar, Intro, AllLines, Filter } from './components/compnentsIndex'
 import { fetchMbsOrders , fetchHesedOrders , postMbsOrders, putMbsOrders, deleteMbsOrders, postHesedOrders, putHesedOrders, deleteHesedOrders } from './redux/actions';
 import { w3cwebsocket }  from 'websocket'
@@ -9,9 +8,12 @@ import { useSelector,useDispatch } from "react-redux";
 
 function App() {
 
+  
+
 let client = new w3cwebsocket("ws://34.245.122.208:8080");
 client.onopen = console.log("React Connected to 8080");
 client.onmessage = message => setTest(message.data)
+
 
 
 //update
@@ -134,10 +136,11 @@ if(msgData[2] == 'post'){
     
 //     }
 //   }
-
+ 
+      
 
   return (
-    <div className="App">
+    <div  className="App">
       <Topbar/>
 
       <Routes>

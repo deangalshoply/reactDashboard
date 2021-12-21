@@ -12,7 +12,6 @@ export default function SecondLine({domain}) {
         <ReadyForDelivery domain={domain}/>
         <ReadyForGather domain={domain}/>
         </div>
-    <br></br>
     </>
     )
 }

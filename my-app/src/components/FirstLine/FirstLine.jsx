@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Today, Tomorrow, TwoDays } from './firstLineIndex';
+import {  Today, Tomorrow, TwoDays, OrdersTimeline } from './firstLineIndex';
 import { useSelector } from "react-redux";
 
 export default function FirstLine() {
@@ -11,12 +11,12 @@ export default function FirstLine() {
 
     
         <div className="firstLine" >
+            <OrdersTimeline/>
             <TwoDays />
             <Tomorrow/>
             <Today/>
             
         </div>
-        <br></br>
         </>
     )
 }

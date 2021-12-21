@@ -1,3 +1,5 @@
+import { useEffect,useRef } from "react";
+
 export function dateSlicer(date) {
     let fullDate = date.toJSON().slice(0, 10);
     let newDate = fullDate.slice(8, 10) + '/' 
@@ -19,4 +21,23 @@ export function stringToDate(date) {
     let dd = date.slice(0, 2);
   let dateFormatted = new Date(yy, mm-1, dd)            // the month is 0-indexed
     return dateFormatted
+}
+
+export function useKey(key, cb) {
+  const callbackRef = useRef(cb)
+
+  useEffect(() => {
+      callbackRef.current = cb;
+  });
+
+  useEffect(() => {
+      function handle(event) {
+          if(event.key === key){
+            callbackRef.current(event)  
+          }
+      }
+
+      document.addEventListener("keydown",handle);
+      return () => document.removeEventListener("keydown",handle)
+  },[key])
 }

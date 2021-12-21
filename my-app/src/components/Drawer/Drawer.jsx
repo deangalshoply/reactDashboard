@@ -12,6 +12,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { getSelectedFilter } from '../../redux/actions';
 
 import { useNavigate  } from 'react-router-dom';
+import { color } from '@mui/system';
 
 export default function TemporaryDrawer() {
 
@@ -85,7 +86,8 @@ export default function TemporaryDrawer() {
     <div>
       {['bottom'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>מסננים</Button>
+
+          <Button variant="contained" onClick={toggleDrawer(anchor, true)} sx={{ width: 100 , height:60, borderRadius:'20px', backgroundColor: 'black',fontSize:'25px' ,fontWeight:'bolder' }}>מסננים</Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

@@ -96,16 +96,16 @@
 //     cursor:'pointer'
 //    }
 //   return (
-//     <Card id={domain} sx={{ width: 275 , height:275, borderRadius:'50px' }}>
+//     <Card id={domain} sx={{ width: 275 , height:275 }}>
 //       <CardContent>
         
-//         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h5" component="div">
+//         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
 // <AddIcon   onClick={addHandle} style={addStyle}/>
 //          הזמנות ממתינות לשליחות
 //         </Typography>
         
 //         <Typography variant="body">
-// <h1> {(DomainData.domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </h1>
+// <div> {(DomainData.domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
 //           <br/>
 //         </Typography>
 //       </CardContent>

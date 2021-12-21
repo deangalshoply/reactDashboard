@@ -16,73 +16,73 @@ export default function Filter() {
    let Data = Filter.data.map((item,index) => {
        //mbs condtions 
        if(item == 'Today0'){
-        return item = <Today key={index} domain={'mbs'}/>
+        return item = <Today filter={true} filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'Tomorrow0'){
-        return item = <Tomorrow key={index} domain={'mbs'}/>
+        return item = <Tomorrow filter={true} key={index} domain={'mbs'}/>
         }  
        if(item == 'TwoDays0'){
-        return item = <TwoDays key={index} domain={'mbs'}/>
+        return item = <TwoDays filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'InDelivery0'){
-        return item = <InDelivery key={index} domain={'mbs'}/>
+        return item = <InDelivery filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'ReadyForDelivery0'){
-        return item = <ReadyForDelivery key={index} domain={'mbs'}/>
+        return item = <ReadyForDelivery filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'ReadyForGather0'){
-        return item = <ReadyForGather key={index} domain={'mbs'}/>
+        return item = <ReadyForGather filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'TodayPickup0'){
-        return item = <TodayPickup key={index} domain={'mbs'}/>
+        return item = <TodayPickup filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'Unfound0'){
-        return item = <Unfound key={index} domain={'mbs'}/>
+        return item = <Unfound filter={true} key={index} domain={'mbs'}/>
         }  
        if(item == 'FailedToDeliver0'){
-        return item = <FailedToDeliver key={index} domain={'mbs'}/>
+        return item = <FailedToDeliver filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'OrderInLateToday0'){
-        return item = <OrderInLateToday key={index} domain={'mbs'}/>
+        return item = <OrderInLateToday filter={true} key={index} domain={'mbs'}/>
         }
        if(item == 'OrdersInLate0'){
-        return item = <OrdersInLate key={index} domain={'mbs'}/>
+        return item = <OrdersInLate filter={true} key={index} domain={'mbs'}/>
         }
 
 
        //hesed condtions
        if(item == 'Today1'){
-        return item = <Today key={index} domain={'hesed'}/>
+        return item = <Today filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'Tomorrow1'){
-        return item = <Tomorrow key={index} domain={'hesed'}/>
+        return item = <Tomorrow filter={true} key={index} domain={'hesed'}/>
         }  
        if(item == 'TwoDays1'){
-        return item = <TwoDays key={index} domain={'hesed'}/>
+        return item = <TwoDays filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'InDelivery1'){
-        return item = <InDelivery key={index} domain={'hesed'}/>
+        return item = <InDelivery filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'ReadyForDelivery1'){
-        return item = <ReadyForDelivery key={index} domain={'hesed'}/>
+        return item = <ReadyForDelivery filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'ReadyForGather1'){
-        return item = <ReadyForGather key={index} domain={'hesed'}/>
+        return item = <ReadyForGather filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'TodayPickup1'){
-        return item = <TodayPickup key={index} domain={'hesed'}/>
+        return item = <TodayPickup filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'Unfound1'){
-        return item = <Unfound key={index} domain={'hesed'}/>
+        return item = <Unfound filter={true} key={index} domain={'hesed'}/>
         }  
        if(item == 'FailedToDeliver1'){
-        return item = <FailedToDeliver key={index} domain={'hesed'}/>
+        return item = <FailedToDeliver filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'OrderInLateToday1'){
-        return item = <OrderInLateToday key={index} domain={'hesed'}/>
+        return item = <OrderInLateToday filter={true} key={index} domain={'hesed'}/>
         }
        if(item == 'OrdersInLate1'){
-        return item = <OrdersInLate key={index} domain={'hesed'}/>
+        return item = <OrdersInLate filter={true} key={index} domain={'hesed'}/>
         }
                
    })
@@ -90,12 +90,10 @@ export default function Filter() {
    
 
     return (
-        <div>
-         <div style={{margin:'5vh 0 5vh 0',display:"flex",flexWrap:'wrap',alignContent:'center', justifyContent:'center',gap:'15px'}}> {Data }</div> 
+        <>
+         <div style={{ display:"flex",flexWrap:'wrap',alignContent:'center', justifyContent:'center'}}> {Data}</div> 
            
-           {/* <AllLines domain={{domain:"mbs",domainNumber:0}}/>
-        <AllLines domain={{domain:"hesed",domainNumber:1}}/>
-        <AllLines domain={{domain:"citysal",domainNumber:2}}/> */}
-        </div>
+        
+        </>
     )
 }

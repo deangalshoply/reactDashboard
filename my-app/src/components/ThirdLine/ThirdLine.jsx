@@ -10,7 +10,6 @@ export default function ThirdLine({domain}) {
         <OrderInLateToday domain={domain}/>
         <OrdersInLate domain={domain}/> 
         </div>
-        <br></br>
         </>
     )
 }
