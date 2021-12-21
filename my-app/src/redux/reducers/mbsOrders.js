@@ -10,9 +10,7 @@ const mbsOrdersReducer = (state = initialState, action) => {
             return state
             
         case 'POST_MBS_ORDERS':
-        console.log(action.payload);
          let newState = [...state,action.payload]
-         console.log(newState);
             return newState
 
         case 'PUT_MBS_ORDERS':

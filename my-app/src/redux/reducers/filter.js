@@ -7,7 +7,6 @@ const filtersReducer = (state = [], action) => {
         case 'ADD_FILTER_DATA':
             let newState = [...state]
             newState.forEach(element => {
-                console.log(action.payload);
                 if(element.name == action.payload.name){
                     element.data.push(action.payload.data)
                 }

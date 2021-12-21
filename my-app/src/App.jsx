@@ -78,11 +78,9 @@ await fetch("http://34.245.122.208:8000/hesed-api")
 
 // post
 client.onmessage = message => {
-  console.log(message);
 let msgData = message.data.split(", ");
 
 if(msgData[2] == 'post'){
-  console.log(msgData);
   
   if(msgData[1] == "bundles" ){
     dispatch(postMbsOrders(JSON.parse(msgData[0])))
@@ -94,7 +92,6 @@ if(msgData[2] == 'post'){
   }
 
   if(msgData[2] == 'put'){
-    console.log(msgData);
     if(msgData[1] == "bundles" ){
       dispatch(putMbsOrders(JSON.parse(msgData[0])))
     
@@ -105,7 +102,6 @@ if(msgData[2] == 'post'){
   }
   
   if(msgData[2] == 'delete'){
-    console.log(msgData);
     if(msgData[1] == "bundles" ){
       dispatch(deleteMbsOrders(JSON.parse(msgData[0])))
     
@@ -118,25 +114,6 @@ if(msgData[2] == 'post'){
 }
 
 
-
-
-
-
-
-// delete
-// client.onmessage = message => {
-//   console.log(message.data.split(", "));
-//   console.log(message);
-  
-//   if(message.data[1].includes("bundles")){
-//     dispatch(postMbsOrders(JSON.parse(message.data[0])))
-  
-//   } else {
-//     dispatch(postHesedOrders(JSON.parse(message.data[0])))
-    
-//     }
-//   }
- 
       
 
   return (

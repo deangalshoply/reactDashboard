@@ -1,0 +1,19 @@
+.form {
+    position: relative;
+    margin-top: 30%;
+}
+
+.text {
+    width: 20vw;
+    height: 5vh;
+    font-size: 25px;
+    margin-right: 1vw;
+}
+
+.submit {
+    width: 5vw;
+    height: 5.5vh;
+    position: relative;
+    top: -2.5px;
+    font-size: 20px;
+}

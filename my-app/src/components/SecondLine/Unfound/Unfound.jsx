@@ -123,7 +123,7 @@ let filterStyles = {
         
         </CardContent>
       <Typography variant="body">
-<div class='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
+<div className='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
           <br/>
         </Typography>
      

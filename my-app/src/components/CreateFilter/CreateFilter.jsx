@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { addFilter,getSelectedFilter } from '../../redux/actions/index'
-
+import './CreateFilter.css'
 export default function CreateFilter() {
 
 
@@ -22,9 +22,9 @@ export default function CreateFilter() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit} id="filterForm" action="post">
-                <input type="text" id="name" />
-                <input type="submit"  />
+            <form onSubmit={handleSubmit} id="filterForm" className='form' action="post">
+                <input type="text" className='text' id="name" />
+                <input type="submit" className='submit' />
             </form>
         </div>
     )

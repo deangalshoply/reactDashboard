@@ -10,9 +10,7 @@ const hesedOrdersReducer = (state = initialState, action) => {
             return state
             
         case 'POST_HESED_ORDERS':
-        console.log(action.payload);
          let newState = [...state,action.payload]
-         console.log(newState);
             return newState
 
         case 'PUT_HESED_ORDERS':
@@ -26,7 +24,6 @@ const hesedOrdersReducer = (state = initialState, action) => {
             const deleteId = action.payload.id
             const deleteState = [...state]
             let deleteIndex = deleteState.findIndex(item => item.id === deleteId)
-            console.log(deleteIndex);
 
             if(deleteIndex != -1){
                 deleteState.splice(deleteIndex,1)
