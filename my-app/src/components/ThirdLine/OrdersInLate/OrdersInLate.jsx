@@ -1,18 +1,17 @@
 import React,{useState,useEffect} from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
-import { stringToDate, currentTime, dateSlicer } from '../../../utils';
+import { stringToDate, currentTime } from '../../../utils';
 import { useSelector,useDispatch } from "react-redux";
 import { addFilterData, removeFilterData } from '../../../redux/actions';
 
 export default function OrdersInLate({filter,domain}) {
   
   let [active, setActive] = useState([false,false,false]);
+  let [sTime, setTime] = useState('');
 
   const DomainData = useSelector((state) => state.Domain);
   const SelectedData = useSelector((state) => state.Selected);
@@ -26,40 +25,88 @@ export default function OrdersInLate({filter,domain}) {
   
   const dispatch = useDispatch();
 
-  let realTime = currentTime()
- 
+  //time interval
   setInterval(function() {
-    realTime = currentTime()
-    
-    // console.log(realTime);
+
+    setTime(currentTime())
       
-    },20000)
+    },35000)
+
+    useEffect(() => {
+      
+      console.log("Time: " + sTime);
+
+    }, [sTime])
 
   let today = new Date();
  
   //filter condition
-let filteredMbsOrdersByStatus = MbsOrdersData.filter(element => 
-  ( element.status != 'completed' && element.status != 'cancelled'  && element.delivery_type != 'pickup' && element.delivery_time != null) 
-);
+    //mbs Filter
+  let nullFilterMbs = MbsOrdersData.filter(element => 
+    (element.delivery_time != null) 
+  );   
+  
+let filteredMbsOrdersByStatus = nullFilterMbs.filter(element => 
+  (( element.status != 'completed' && element.status != 'cancelled'  &&  element.status != 'sucssefulydeliver' && element.status != 'failed' && element.delivery_type != 'pickup') ) 
+  );
 
-  let filteredMbsOrders = filteredMbsOrdersByStatus.filter(element => 
-        
-     ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= realTime) 
-  || ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= realTime )
-  || (stringToDate(element.delivery_date) <= today));
+  let filteredDateMbs = filteredMbsOrdersByStatus.filter(element => 
+    (stringToDate(element.delivery_date) < today.setHours(0,0,0,0))
 
+    );
 
-  let filteredHesedOrdersByStatus = HesedOrdersData.filter(element => 
-    ( element.status != 'completed' && element.status != 'cancelled'  && element.delivery_type != 'pickup' && element.delivery_time != null) 
+    
+    let filtered5MbsOrders = filteredMbsOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 5){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
+    }
+  });
+    
+  let filtered13MbsOrders = filteredMbsOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 13){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
+    }
+  });
+
+   let filteredMbsOrders = filtered13MbsOrders.length + filtered5MbsOrders.length + filteredDateMbs.length
+ 
+
+  
+
+  //hesed Filter
+    let nullFilterHesed = HesedOrdersData.filter(element => 
+      (element.delivery_time != null) 
+    );
+
+    let filteredHesedOrdersByStatus = nullFilterHesed.filter(element => 
+    (( element.status != 'completed' && element.status != 'cancelled'  &&  element.status != 'sucssefulydeliver' && element.status != 'failed' && element.delivery_type != 'pickup') ) 
   );
   
-    let filteredHesedOrders = filteredHesedOrdersByStatus.filter(element => 
-          
-       ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= currentTime()) 
-    || ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= currentTime() )
-    || (stringToDate(element.delivery_date) <= today));
-  
-  
+
+  let filteredDateHesed = filteredHesedOrdersByStatus.filter(element => 
+    (stringToDate(element.delivery_date) < today.setHours(0,0,0,0))
+
+    );
+
+    
+  let filtered5HesedOrders = filteredHesedOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 5){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
+      // ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= sTime)) 
+      // && ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= sTime))
+    }
+  });
+    
+  let filtered13HesedOrders = filteredHesedOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 13){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
+      // ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= sTime)) 
+      // && ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= sTime))
+    }
+  });
+      
+  let filteredHesedOrders = filtered13HesedOrders.length + filtered5HesedOrders.length + filteredDateHesed.length
+ 
 
 
  //Load Data
@@ -85,8 +132,10 @@ let filteredMbsOrdersByStatus = MbsOrdersData.filter(element =>
         
       })
     }
-
 })
+
+setTime(currentTime())
+
 }, [SelectedData])
 
 
@@ -158,7 +207,7 @@ let filterStyles = {
         
         </CardContent>
       <Typography variant="body">
-<div className='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
+<div className='length'> {(domain == "mbs") ? filteredMbsOrders : filteredHesedOrders} </div>
           <br/>
         </Typography>
      

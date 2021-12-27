@@ -1,11 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
-import { currentTime, dateSlicer, stringToDate } from '../../../utils';
+import { currentTime, stringToDate } from '../../../utils';
 
 import { useSelector,useDispatch } from "react-redux";
 import { addFilterData, removeFilterData } from '../../../redux/actions';
@@ -13,6 +11,7 @@ import { addFilterData, removeFilterData } from '../../../redux/actions';
 export default function OrderInLateToday({filter,domain}) {
   
   let [active, setActive] = useState([false,false,false]);
+  let [sTime, setTime] = useState('');
 
   const DomainData = useSelector((state) => state.Domain);
   const SelectedData = useSelector((state) => state.Selected);
@@ -23,14 +22,18 @@ export default function OrderInLateToday({filter,domain}) {
 
   const dispatch = useDispatch();
 
-  let realTime = currentTime()
- 
+ //time interval
   setInterval(function() {
-    realTime = currentTime()
-    
-    // console.log(realTime);
+
+    setTime(currentTime())
       
-    },20000)
+    },35000)
+
+    useEffect(() => {
+      
+      console.log("Time: " + sTime);
+
+    }, [sTime])
   
   if (domain == undefined) {
     domain = DomainData.domain
@@ -38,32 +41,56 @@ export default function OrderInLateToday({filter,domain}) {
   
   let today = new Date();
  
-let filteredMbsOrdersByStatus = MbsOrdersData.filter(element =>         
-  (element.status != 'completed' && element.delivery_time != null) 
-);
+//filters
+//mbs filter
+  let nullFilterMbs = MbsOrdersData.filter(element => 
+    (element.delivery_time != null) 
+  );
 
-let filteredMbsOrders = filteredMbsOrdersByStatus.filter(element => 
-        
-     ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= realTime) 
-  || ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= realTime ));
+let filteredMbsOrdersByStatus = nullFilterMbs.filter(element =>         
+  (( element.status != 'completed' && element.status != 'cancelled'  &&  element.status != 'sucssefulydeliver' && element.status != 'failed' && element.delivery_type != 'pickup') ) 
+  );
 
+
+  let filtered5MbsOrders = filteredMbsOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 5){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
+    }
+  });
+    
+  let filtered13MbsOrders = filteredMbsOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 13){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
+    }
+  });
+
+
+let filteredMbsOrders = filtered5MbsOrders.length + filtered13MbsOrders.length
   
-let filteredHesedOrdersByStatus = HesedOrdersData.filter(element =>         
-  (element.status != 'completed' && element.delivery_time != null) 
-);
+//hesed filter
+  let nullFilterHesed = HesedOrdersData.filter(element => 
+    (element.delivery_time != null) 
+  );
 
-let filteredHesedOrders = filteredHesedOrdersByStatus.filter(element => 
-        
-      ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= realTime) 
-  || ((element.delivery_date == dateSlicer(today)) && element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= realTime ));
- 
+let filteredHesedOrdersByStatus = nullFilterHesed.filter(element =>         
+  (( element.status != 'completed' && element.status != 'cancelled'  &&  element.status != 'sucssefulydeliver' && element.status != 'failed' && element.delivery_type != 'pickup') ) 
+  );
+
+
+  let filtered5HesedOrders = filteredHesedOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 5){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
+    }
+  });
+    
+  let filtered13HesedOrders = filteredHesedOrdersByStatus.filter(element => {
+    if(element.delivery_time.length == 13){
+      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
+    }
+  });
   
+let filteredHesedOrders =  filtered13HesedOrders.length + filtered5HesedOrders.length
 
-
-// useEffect(() => {
-//   console.log(realTime);
-
-// }, [realTime])
 
    //Load Data
 useEffect(() => {
@@ -90,6 +117,9 @@ useEffect(() => {
     }
 
 })
+
+setTime(currentTime())
+
 }, [SelectedData])
 
 
@@ -161,7 +191,7 @@ let filterStyles = {
         
         </CardContent>
       <Typography variant="body">
-<div className='length'> {(domain == "mbs") ? filteredMbsOrders.length : filteredHesedOrders.length} </div>
+<div className='length'> {(domain == "mbs") ? filteredMbsOrders : filteredHesedOrders} </div>
           <br/>
         </Typography>
      

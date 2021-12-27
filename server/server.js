@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({extended:true})).use(bodyParser.json())
 
 //get mbs wp-json data
 app.get('/mbs-api',function(req,res) {
-    axios.get("https://dev.mybundles.co.il/wp-json/api/v1/orders", {
+    axios.get("https://mybundles.co.il/wp-json/api/v1/orders", {
     headers: {
         'Cookie': 'open-site=yes'
     }
@@ -31,7 +31,7 @@ app.get('/mbs-api',function(req,res) {
 
 //get hesed wp-json data
 app.get('/hesed-api',function(req,res) {
-    axios.get("https://dev.hesedlemehadrin.co.il/online/wp-json/api/v1/orders", {
+    axios.get("https://hesedlemehadrin.co.il/online/wp-json/api/v1/orders", {
     headers: {
         'Cookie': 'open-site=yes'
     }

@@ -1,8 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -21,9 +19,9 @@ export default function FailedToDeliver({filter,domain}) {
   
   const dispatch = useDispatch();
 
-let filteredMbsOrders = MbsOrdersData.filter(element => element.status == 'cancelled');
-let filteredHesedOrders = HesedOrdersData.filter(element => element.status == 'cancelled');
-  
+  let filteredMbsOrders = MbsOrdersData.filter(element => element.status == 'failed');
+  let filteredHesedOrders = HesedOrdersData.filter(element => element.status == 'failed');
+
 if (domain == undefined) {
   domain = DomainData.domain
 }

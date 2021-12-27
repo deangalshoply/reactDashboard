@@ -1,3 +1,5 @@
+/* eslint-disable */ 
+
 import './App.css';
 import React,{useEffect,useState} from 'react'
 import { CreateFilter, Topbar, Intro, AllLines, Filter } from './components/compnentsIndex'
@@ -10,9 +12,8 @@ function App() {
 
   
 
-let client = new w3cwebsocket("ws://34.245.122.208:8080");
+let client = new w3cwebsocket("ws://34.255.200.10:8080");
 client.onopen = console.log("React Connected to 8080");
-client.onmessage = message => setTest(message.data)
 
 
 
@@ -27,15 +28,16 @@ client.onmessage = message => setTest(message.data)
 //delete
 // client.onmessage = message => {
 //  let foundIndex = orders.findIndex(order => order.id == message.data.id) 
-//   orders.splice(foundIndex,1)
+//   orders.splice(foundIndex,1)  
 //   setTest(orders)
 // }
+
+
 
 
   const SelectedData = useSelector((state) => state.Selected);
   const dispatch = useDispatch();
   
-  let [test, setTest] = useState("");
 
   let [mbsOrders, setMbsOrders] = useState([]);
   let [hesedOrders, setHesedOrders] = useState([]);
@@ -43,13 +45,13 @@ client.onmessage = message => setTest(message.data)
 
   useEffect(async() => {
     
-await fetch("http://34.245.122.208:8000/mbs-api")
+await fetch("http://34.255.200.10:8000/mbs-api")
 .then(respone => respone.json())
 .then(data => {
   setMbsOrders(data)
 })
 
-await fetch("http://34.245.122.208:8000/hesed-api")
+await fetch("http://34.255.200.10:8000/hesed-api")
 .then(respone => respone.json())
 .then(data => {
   setHesedOrders(data)
