@@ -66,6 +66,8 @@ let filteredMbsOrdersByStatus = nullFilterMbs.filter(element =>
 
 
 let filteredMbsOrders = filtered5MbsOrders.length + filtered13MbsOrders.length
+let mbs = [filtered5MbsOrders , filtered13MbsOrders]
+
   
 //hesed filter
   let nullFilterHesed = HesedOrdersData.filter(element => 
@@ -90,6 +92,7 @@ let filteredHesedOrdersByStatus = nullFilterHesed.filter(element =>
   });
   
 let filteredHesedOrders =  filtered13HesedOrders.length + filtered5HesedOrders.length
+let hesed =  [filtered13HesedOrders , filtered5HesedOrders]
 
 
    //Load Data
@@ -181,7 +184,7 @@ let filterStyles = {
   width: '28.68vh'
 }
   return (
-    <Card id={domain} sx={filter ? filterStyles : firstLine}>
+    <Card onClick={() => console.log((domain == "mbs") ? mbs : hesed)} id={domain} sx={filter ? filterStyles : firstLine}>
       <CardContent style={{height:'30%'}}>
         
         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">

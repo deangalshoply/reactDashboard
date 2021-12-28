@@ -118,7 +118,7 @@ let filterStyles = {
 }
 
   return (
-    <Card id={domain} sx={filter ? filterStyles : firstLine}>
+    <Card onClick={() => console.log((domain == "mbs") ? filteredMbsOrders : filteredHesedOrders)} id={domain} sx={filter ? filterStyles : firstLine}>
       <CardContent style={{height:'30%'}}>
         
         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">

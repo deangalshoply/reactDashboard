@@ -94,7 +94,7 @@
 //     cursor:'pointer'
 //    }
 //   return (
-//     <Card id={domain} sx={{ width: 275 , height:275 }}>
+//     <Card onClick={() => console.log((domain == "mbs") ? filteredMbsOrders : filteredHesedOrders)} id={domain} sx={{ width: 275 , height:275 }}>
 //       <CardContent>
         
 //         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">

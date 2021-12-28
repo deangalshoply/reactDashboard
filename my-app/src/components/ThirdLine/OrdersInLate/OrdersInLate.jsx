@@ -69,8 +69,8 @@ let filteredMbsOrdersByStatus = nullFilterMbs.filter(element =>
   });
 
    let filteredMbsOrders = filtered13MbsOrders.length + filtered5MbsOrders.length + filteredDateMbs.length
+   let mbs = [filtered13MbsOrders , filtered5MbsOrders , filteredDateMbs]
  
-
   
 
   //hesed Filter
@@ -92,20 +92,19 @@ let filteredMbsOrdersByStatus = nullFilterMbs.filter(element =>
   let filtered5HesedOrders = filteredHesedOrdersByStatus.filter(element => {
     if(element.delivery_time.length == 5){
       return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
-      // ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= sTime)) 
-      // && ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= sTime))
+     
     }
   });
     
   let filtered13HesedOrders = filteredHesedOrdersByStatus.filter(element => {
     if(element.delivery_time.length == 13){
       return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
-      // ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 5 && element.delivery_time.replace(':','') <= sTime)) 
-      // && ((element.delivery_date == dateSlicer(today)) && (element.delivery_time.length == 13 &&  element.delivery_time.slice(0,5).replace(':','') <= sTime))
+     
     }
   });
       
   let filteredHesedOrders = filtered13HesedOrders.length + filtered5HesedOrders.length + filteredDateHesed.length
+  let hesed = [filtered13HesedOrders , filtered5HesedOrders , filteredDateHesed]
  
 
 
@@ -176,7 +175,6 @@ setTime(currentTime())
     }
   }
 }
-  
   let addStyle = {
   transition: 'transform 150ms ease',
   transform: active[DomainData.domainNumber] ? 'rotate(45deg)' : '', 
@@ -197,7 +195,7 @@ let filterStyles = {
   width: '28.68vh'
 }
   return (
-    <Card id={domain} sx={filter ? filterStyles : firstLine}>
+    <Card onClick={() => console.log((domain == "mbs") ? mbs : hesed)} id={domain} sx={filter ? filterStyles : firstLine}>
       <CardContent style={{height:'30%'}}>
         
         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
