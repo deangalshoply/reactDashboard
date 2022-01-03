@@ -171,7 +171,7 @@ setTime(currentTime())
 
 let firstLine = {
   fontSize:'50px',
-  width: '25vw' ,
+  width: '33.333vw' ,
   height: '33.333vh' 
 }
 
@@ -182,7 +182,7 @@ let filterStyles = {
 }
   return (
     <Card onClick={() => console.log((domain == "mbs") ? filteredMbsOrders : filteredHesedOrders)} id={domain} sx={filter ? filterStyles : firstLine}>
-      <CardContent style={{height:'30%'}}>
+      <CardContent style={{height:'33.333%'}}>
         
         <Typography style={{display:'flex',justifyContent:'center',alignItems:'center'}} variant="h4" component="div">
 <AddIcon  onClick={addHandle} style={addStyle}/>

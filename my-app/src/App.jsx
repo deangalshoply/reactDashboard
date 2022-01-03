@@ -42,7 +42,7 @@ client.onopen = console.log("React Connected to 8080");
   let [mbsOrders, setMbsOrders] = useState([]);
   let [hesedOrders, setHesedOrders] = useState([]);
 
-
+//load data from api
   useEffect(async() => {
     
 await fetch("http://34.255.200.10:8000/mbs-api")

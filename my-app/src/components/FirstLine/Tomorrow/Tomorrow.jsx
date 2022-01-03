@@ -108,7 +108,7 @@ useEffect(() => {
 
 let firstLine = {
   fontSize:'50px',
-  width: '25vw' ,
+  width: '33.333vw' ,
   height: '33.333vh' 
 }
 

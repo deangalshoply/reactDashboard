@@ -102,8 +102,8 @@ useEffect(() => {
 
 let firstLine = {
   fontSize:'50px',
-  width: '25vw' ,
-  height: '33.333vh' 
+  width: '33.333vw' ,
+  height: '34.2vh' 
 }
 
 let filterStyles = {
