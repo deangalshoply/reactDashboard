@@ -40,8 +40,8 @@ export default function TwoDays({filter,domain}) {
   
   
 
-  let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(twoDays));
-  let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(twoDays));
+  let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(date));
+  let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(date));
 
   if (domain == undefined) {
     domain = DomainData.domain
