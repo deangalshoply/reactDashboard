@@ -11,6 +11,7 @@ import { addFilterData, removeFilterData } from '../../../redux/actions';
 export default function Tomorrow({filter,domain}) {
 
   let [active, setActive] = useState([false,false,false]);
+  let [date, setDateCheck] = useState();
 
   const DomainData = useSelector((state) => state.Domain);
   const FiltersData = useSelector((state) => state.Filters);
@@ -20,13 +21,26 @@ export default function Tomorrow({filter,domain}) {
 
   const dispatch = useDispatch();
   
-  let today = new Date();
 
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  //time interval
+  setInterval(function() {
+   
+    let today = new Date();
 
-let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(tomorrow));
-let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(tomorrow));
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    setDateCheck(tomorrow)
+  
+    },7*60000)
+
+    useEffect(() => {
+      console.log("Date: " + date);
+    }, [date])
+    
+  
+
+let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(date));
+let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(date));
 
 if (domain == undefined) {
   domain = DomainData.domain
@@ -55,8 +69,15 @@ useEffect(() => {
         
       })
     }
-
 })
+
+let today = new Date();
+
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
+setDateCheck(tomorrow)
+console.log("onMount: " +date);
+
 }, [SelectedData])
 
 
