@@ -11,6 +11,9 @@ import { addFilterData, removeFilterData } from '../../../redux/actions';
 export default function TwoDays({filter,domain}) {
   
   let [active, setActive] = useState([false,false,false]);
+  let [didMount, setDidMount] = useState(false);
+
+  let [datecheck, setDateCheck] = useState();
 
   const DomainData = useSelector((state) => state.Domain);
   const SelectedData = useSelector((state) => state.Selected);
@@ -20,14 +23,24 @@ export default function TwoDays({filter,domain}) {
 
   const dispatch = useDispatch();
   
-  
+  //time interval
+  setInterval(function() {
+    let date = new Date();
+    setDateCheck(date)
+    },6*360000)
+
+    useEffect(() => {
+      console.log("Two days: " + datecheck);
+
+    }, [datecheck])
+
   const today = new Date();
 
   const twoDays = new Date(today)
   twoDays.setDate(twoDays.getDate() + 2)
 
-  let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(twoDays));
-  let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(twoDays));
+  let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(didMount ? datecheck : twoDays));
+  let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(didMount ? datecheck : twoDays));
 
   if (domain == undefined) {
     domain = DomainData.domain
@@ -56,9 +69,11 @@ useEffect(() => {
         
       })
     }
-
+    
+    
 })
-
+setDateCheck(twoDays)
+    setDidMount(true)
 
 }, [SelectedData])
 

@@ -34,7 +34,7 @@ export default function OrdersInLate({filter,domain}) {
 
     useEffect(() => {
       
-      console.log("Time: " + sTime);
+      // console.log("Time: " + sTime);
 
     }, [sTime])
 

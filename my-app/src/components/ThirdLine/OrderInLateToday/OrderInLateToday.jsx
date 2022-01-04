@@ -12,6 +12,9 @@ export default function OrderInLateToday({filter,domain}) {
   
   let [active, setActive] = useState([false,false,false]);
   let [sTime, setTime] = useState('');
+  let [datecheck, setDateCheck] = useState();
+
+  let [didMount, setDidMount] = useState(false);
 
   const DomainData = useSelector((state) => state.Domain);
   const SelectedData = useSelector((state) => state.Selected);
@@ -31,9 +34,20 @@ export default function OrderInLateToday({filter,domain}) {
 
     useEffect(() => {
       
-      console.log("Time: " + sTime);
+      // console.log("Time: " + sTime);
 
     }, [sTime])
+
+     //date interval
+   setInterval(function() {
+    let date = new Date();
+    setDateCheck(date)
+    },6*360000)
+
+    useEffect(() => {
+      console.log("DATE: " + datecheck);
+
+    }, [datecheck])
   
   if (domain == undefined) {
     domain = DomainData.domain
@@ -54,13 +68,13 @@ let filteredMbsOrdersByStatus = nullFilterMbs.filter(element =>
 
   let filtered5MbsOrders = filteredMbsOrdersByStatus.filter(element => {
     if(element.delivery_time.length == 5){
-      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
+      return (stringToDate(element.delivery_date) == (didMount ? datecheck : today).setHours(0,0,0,0) && element.delivery_time.replace(':','') <= sTime)
     }
   });
     
   let filtered13MbsOrders = filteredMbsOrdersByStatus.filter(element => {
     if(element.delivery_time.length == 13){
-      return (stringToDate(element.delivery_date) == today.setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
+      return (stringToDate(element.delivery_date) == (didMount ? datecheck : today).setHours(0,0,0,0) && element.delivery_time.slice(0,5).replace(':','') <= sTime)
     }
   });
 
@@ -121,7 +135,9 @@ useEffect(() => {
 
 })
 
-setTime(currentTime())
+    setTime(currentTime())
+    setDateCheck(today)
+    setDidMount(true)
 
 }, [SelectedData])
 

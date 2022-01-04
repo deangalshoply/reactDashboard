@@ -12,6 +12,9 @@ export default function Today({filter,domain}) {
 
   
   let [active, setActive] = useState([false,false,false]);
+  let [didMount, setDidMount] = useState(false);
+
+  let [datecheck, setDateCheck] = useState();
 
   const DomainData = useSelector((state) => state.Domain);
   const SelectedData = useSelector((state) => state.Selected);
@@ -22,22 +25,19 @@ export default function Today({filter,domain}) {
   const dispatch = useDispatch();
 
   //time interval
-  // setInterval(function() {
+  setInterval(function() {
+    let date = new Date();
+    setDateCheck(date)
+    },6*360000)
 
-  //   setTime(currentTime())
-      
-  //   },35000)
+    useEffect(() => {
+      console.log("Today: " + datecheck);
 
-  //   useEffect(() => {
-      
-  //     console.log("Time: " + sTime);
-
-  //   }, [sTime])
+    }, [datecheck])
   
   let today = new Date();
-
-let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(today));
-let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(today));
+let filteredMbsOrders = MbsOrdersData.filter(element => element.delivery_date == dateSlicer(didMount ? datecheck : today));
+let filteredHesedOrders = HesedOrdersData.filter(element => element.delivery_date == dateSlicer(didMount ? datecheck : today  ));
 
 if (domain == undefined) {
   domain = DomainData.domain
@@ -68,6 +68,10 @@ useEffect(() => {
     }
 
 })
+setDateCheck(today)
+setDidMount(true)
+
+
 }, [SelectedData])
 
 
